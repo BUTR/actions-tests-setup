@@ -1,0 +1,105 @@
+name: "Tests Setup"
+description: ""
+inputs:
+  github-token:
+    description: ''
+    default: ''
+    
+  steam-appid:
+    description: ''
+    default: '261550'
+  steam-depotid:
+    description: ''
+    default: '261551'
+  steam-login:
+    description: ''
+    default: ''
+  steam-password:
+    description: ''
+    default: ''
+  steam-filefilter:
+    description: ''
+    default: './.github/resources/FileFilters.regexp'
+    
+  stable-directory:
+    description: ''
+    default: 'bannerlord-stable'
+  beta-directory:
+    description: ''
+    default: 'bannerlord-beta'
+    
+  stable-version:
+    description: ''
+    default: ''
+  beta-version:
+    description: ''
+    default: ''
+    
+  depotdownloader-version:
+    description: ''
+    default: '2.3.6'
+  opencover-version:
+    description: ''
+    default: '4.7.922'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core 3.1
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.x
+
+    - name: Setup .NET 5
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Setup BUTR GPR
+      uses: actions/setup-dotnet@master
+      with:
+        source-url: https://nuget.pkg.github.com/BUTR/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{inputs.github-token}}
+        
+    - name: Download DepotDownloader_${{inputs.depotdownloader-version}}
+      uses: i3h/download-release-asset@v1
+      with:
+        owner: SteamRE
+        repo: DepotDownloader
+        tag: DepotDownloader_${{inputs.depotdownloader-version}}
+        file: depotdownloader-${{inputs.depotdownloader-version}}.zip
+
+    - name: Extract DepotDownloader_${{inputs.depotdownloader-version}}
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: depotdownloader-${{inputs.depotdownloader-version}}.zip
+        pathTarget: depotdownloader
+        
+    - name: Download Game binaries (Stable)
+      run: >-
+        dotnet depotdownloader/DepotDownloader.dll -app ${{inputs.steam-appid}} -depot ${{inputs.steam-depotid}} -beta ${{inputs.stable-version}} -username ${{inputs.steam-login}}
+        -password ${{inputs.steam-password}} -filelist ${{steam-filefilter}} -dir ${{inputs.stable-directory}}
+      shell: pwsh
+    - name: Download Game binaries (Beta)
+      run: >-
+        dotnet depotdownloader/DepotDownloader.dll -app ${{inputs.steam-appid}} -depot ${{inputs.steam-depotid}} -beta ${{inputs.beta-version}} -username ${{inputs.steam-login}}
+        -password ${{inputs.steam-password}} -filelist ${{steam-filefilter}} -dir ${{inputs.beta-directory}}
+      shell: pwsh
+        
+    - name: Download opencover.${{inputs.opencover-version}}
+      uses: i3h/download-release-asset@v1
+      with:
+        owner: OpenCover
+        repo: opencover
+        tag: ${{inputs.opencover-version}}
+        file: opencover.${{inputs.opencover-version}}.zip
+
+    - name: Extract opencover.${{inputs.opencover-version}}
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: opencover.${{inputs.opencover-version}}.zip
+        pathTarget: opencover
