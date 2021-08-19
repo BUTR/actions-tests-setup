@@ -58,6 +58,13 @@ runs:
       with:
         dotnet-version: 5.0.x
 
+
+    - name: Ensure NuGet Source
+      uses: fabriciomurta/ensure-nuget-source@v1
+      with:
+        name: 'nuget.org'
+        url: 'https://api.nuget.org/v3/index.json'
+
     - name: Setup BUTR GPR
       uses: actions/setup-dotnet@master
       with:
