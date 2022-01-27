@@ -59,6 +59,11 @@ runs:
       uses: actions/setup-dotnet@master
       with:
         dotnet-version: 5.0.x
+        
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 6.0.x
 
 
     - name: Ensure NuGet Source
@@ -75,7 +80,7 @@ runs:
         NUGET_AUTH_TOKEN: ${{inputs.github-token}}
         
     - name: Download DepotDownloader_${{inputs.depotdownloader-version}}
-      uses: i3h/download-release-asset@v1
+      uses: i3h/download-release-asset@v1.3.2
       with:
         owner: SteamRE
         repo: DepotDownloader
@@ -103,7 +108,7 @@ runs:
       shell: pwsh
         
     - name: Download opencover.${{inputs.opencover-version}}
-      uses: i3h/download-release-asset@v1
+      uses: i3h/download-release-asset@v1.3.2
       with:
         owner: OpenCover
         repo: opencover
