@@ -37,7 +37,7 @@ inputs:
     
   depotdownloader-version:
     description: ''
-    default: '2.4.5'
+    default: '2.4.6'
   opencover-version:
     description: ''
     default: '4.7.922'
@@ -93,18 +93,18 @@ runs:
         pathSource: depotdownloader-${{inputs.depotdownloader-version}}.zip
         pathTarget: depotdownloader
         
-    - name: Download Game binaries (Stable)
+    - name: Download Game Binaries (Stable)
       run: >-
         if ('${{inputs.stable-version}}' -eq '') { Return };
         dotnet depotdownloader/DepotDownloader.dll -app ${{inputs.steam-appid}} -depot ${{inputs.steam-depotid}} -beta ${{inputs.stable-version}} -username ${{inputs.steam-login}}
-        -password ${{inputs.steam-password}} -filelist ${{inputs.steam-filefilter}} -dir ${{inputs.stable-directory}};
+        -password ${{inputs.steam-password}} -os windows -osarch 64 -filelist ${{inputs.steam-filefilter}} -dir ${{inputs.stable-directory}};
       shell: pwsh
       
-    - name: Download Game binaries (Beta)
+    - name: Download Game Binaries (Beta)
       run: >-
         if ('${{inputs.beta-version}}' -eq '') { Return };
         dotnet depotdownloader/DepotDownloader.dll -app ${{inputs.steam-appid}} -depot ${{inputs.steam-depotid}} -beta ${{inputs.beta-version}} -username ${{inputs.steam-login}}
-        -password ${{inputs.steam-password}} -filelist ${{inputs.steam-filefilter}} -dir ${{inputs.beta-directory}};
+        -password ${{inputs.steam-password}}  -os windows -osarch 64 -filelist ${{inputs.steam-filefilter}} -dir ${{inputs.beta-directory}};
       shell: pwsh
         
     - name: Download opencover.${{inputs.opencover-version}}
