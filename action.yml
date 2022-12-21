@@ -84,12 +84,11 @@ runs:
         NUGET_AUTH_TOKEN: ${{inputs.github-token}}
         
     - name: Download DepotDownloader_${{inputs.depotdownloader-version}}
-      uses: i3h/download-release-asset@v1.3.3
+      uses: robinraju/release-downloader@v1.7
       with:
-        owner: SteamRE
-        repo: DepotDownloader
+        repository: SteamRE/DepotDownloader
         tag: DepotDownloader_${{inputs.depotdownloader-version}}
-        file: depotdownloader-${{inputs.depotdownloader-version}}.zip
+        fileName: depotdownloader-${{inputs.depotdownloader-version}}.zip
 
     - name: Extract DepotDownloader_${{inputs.depotdownloader-version}}
       uses: DuckSoft/extract-7z-action@v1.0
@@ -112,10 +111,9 @@ runs:
       shell: pwsh
         
     - name: Download opencover.${{inputs.opencover-version}}
-      uses: i3h/download-release-asset@v1.3.3
+      uses: robinraju/release-downloader@v1.7
       with:
-        owner: OpenCover
-        repo: opencover
+        repository: OpenCover/opencover
         tag: ${{inputs.opencover-version}}
         file: opencover.${{inputs.opencover-version}}.zip
 
