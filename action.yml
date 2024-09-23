@@ -89,7 +89,7 @@ runs:
         NUGET_AUTH_TOKEN: ${{inputs.github-token}}
         
     - name: Download DepotDownloader_${{inputs.depotdownloader-version}}
-      uses: robinraju/release-downloader@v1.7
+      uses: robinraju/release-downloader@v1
       with:
         repository: SteamRE/DepotDownloader
         tag: DepotDownloader_${{inputs.depotdownloader-version}}
@@ -116,7 +116,7 @@ runs:
       shell: pwsh
         
     - name: Download opencover.${{inputs.opencover-version}}
-      uses: robinraju/release-downloader@v1.7
+      uses: robinraju/release-downloader@v1
       with:
         repository: OpenCover/opencover
         tag: ${{inputs.opencover-version}}
