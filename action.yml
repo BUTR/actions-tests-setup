@@ -89,6 +89,7 @@ runs:
         NUGET_AUTH_TOKEN: ${{inputs.github-token}}
         
     - name: Download DepotDownloader_${{inputs.depotdownloader-version}}
+      id: download_depotdownloader
       uses: robinraju/release-downloader@v1
       with:
         repository: SteamRE/DepotDownloader
@@ -98,7 +99,7 @@ runs:
     - name: Extract DepotDownloader_${{inputs.depotdownloader-version}}
       uses: DuckSoft/extract-7z-action@v1.0
       with:
-        pathSource: DepotDownloader-windows-x64.zip
+        pathSource: ${{fromJson(steps.download_depotdownloader.outputs.downloaded_files)[0]}}
         pathTarget: depotdownloader
         
     - name: Download Game Binaries (Stable)
@@ -116,6 +117,7 @@ runs:
       shell: pwsh
         
     - name: Download opencover.${{inputs.opencover-version}}
+      id: download_opencover
       uses: robinraju/release-downloader@v1
       with:
         repository: OpenCover/opencover
@@ -123,5 +125,5 @@ runs:
         file: opencover.${{inputs.opencover-version}}.zip
 
     - name: Extract opencover.${{inputs.opencover-version}}
-      run: Expand-Archive -Path "${{github.workspace}}/opencover.${{inputs.opencover-version}}.zip" -DestinationPath "${{github.workspace}}/opencover"
+      run: Expand-Archive -Path "${{fromJson(steps.download_opencover.outputs.downloaded_files)[0]}}" -DestinationPath "${{github.workspace}}/opencover"
       shell: pwsh
