@@ -111,7 +111,7 @@ runs:
     - name: Download Game Binaries (Beta)
       run: >-
         if ('${{inputs.beta-version}}' -eq '') { Return };
-        dotnet depotdownloader/DepotDownloader.exe -app ${{inputs.steam-appid}} -depot ${{inputs.steam-depotid}} -beta ${{inputs.beta-version}} -username ${{inputs.steam-login}}
+        depotdownloader/DepotDownloader.exe -app ${{inputs.steam-appid}} -depot ${{inputs.steam-depotid}} -beta ${{inputs.beta-version}} -username ${{inputs.steam-login}}
         -password ${{inputs.steam-password}} -os windows -osarch 64 -filelist ${{inputs.steam-filefilter}} -dir ${{inputs.beta-directory}};
       shell: pwsh
         
