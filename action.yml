@@ -118,7 +118,7 @@ runs:
         
     - name: Download opencover.${{inputs.opencover-version}}
       id: download_opencover
-      uses: robinraju/release-downloader@v1
+      uses: robinraju/release-downloader@v1.7
       with:
         repository: OpenCover/opencover
         tag: ${{inputs.opencover-version}}
