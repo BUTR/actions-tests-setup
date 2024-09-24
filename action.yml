@@ -123,7 +123,5 @@ runs:
         file: opencover.${{inputs.opencover-version}}.zip
 
     - name: Extract opencover.${{inputs.opencover-version}}
-      uses: hoatruongdev09/extract-zip@v1.2
-      with:
-        input-path: opencover.${{inputs.opencover-version}}.zip
-        output-path: '${{github.workspace}}/opencover'
+      run: Expand-Archive -Path "opencover.${{inputs.opencover-version}}.zip" -DestinationPath "${{github.workspace}}/opencover"
+      shell: pwsh
