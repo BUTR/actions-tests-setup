@@ -123,7 +123,7 @@ runs:
         file: opencover.${{inputs.opencover-version}}.zip
 
     - name: Extract opencover.${{inputs.opencover-version}}
-      uses: DuckSoft/extract-7z-action@v1.0
+      uses: extract-zip@v1.2
       with:
-        pathSource: opencover.${{inputs.opencover-version}}.zip
-        pathTarget: opencover
+        input-path: opencover.${{inputs.opencover-version}}.zip
+        output-path: opencover
