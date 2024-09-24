@@ -118,11 +118,11 @@ runs:
         
     - name: Download opencover.${{inputs.opencover-version}}
       id: download_opencover
-      uses: robinraju/release-downloader@v1.7
+      uses: robinraju/release-downloader@v1
       with:
         repository: OpenCover/opencover
         tag: ${{inputs.opencover-version}}
-        file: opencover.${{inputs.opencover-version}}.zip
+        fileName: opencover.${{inputs.opencover-version}}.zip
 
     - name: Extract opencover.${{inputs.opencover-version}}
       run: Expand-Archive -Path "${{fromJson(steps.download_opencover.outputs.downloaded_files)[0]}}" -DestinationPath "${{github.workspace}}/opencover"
