@@ -126,4 +126,4 @@ runs:
       uses: hoatruongdev09/extract-zip@v1.2
       with:
         input-path: opencover.${{inputs.opencover-version}}.zip
-        output-path: opencover
+        output-path: ./opencover
