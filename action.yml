@@ -95,6 +95,7 @@ runs:
         path: depotdownloader
         repository: SteamRE/DepotDownloader
         run-id: 10971966425
+        github-token: ${{ github.token }}
         
     #- name: Download DepotDownloader_${{inputs.depotdownloader-version}}
     #  id: download_depotdownloader
