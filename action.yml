@@ -87,14 +87,20 @@ runs:
         source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{inputs.github-token}}
-        
-    - name: Download DepotDownloader_${{inputs.depotdownloader-version}}
-      id: download_depotdownloader
-      uses: robinraju/release-downloader@v1
+
+    - uses: actions/download-artifact@v4
       with:
+        name: DepotDownloader-framework
         repository: SteamRE/DepotDownloader
-        tag: DepotDownloader_${{inputs.depotdownloader-version}}
-        fileName: DepotDownloader-windows-x64.zip
+        run-id: 10971966425
+        
+    #- name: Download DepotDownloader_${{inputs.depotdownloader-version}}
+    #  id: download_depotdownloader
+    #  uses: robinraju/release-downloader@v1
+    #  with:
+    #    repository: SteamRE/DepotDownloader
+    #    tag: DepotDownloader_${{inputs.depotdownloader-version}}
+    #    fileName: DepotDownloader-windows-x64.zip
 
     - name: Extract DepotDownloader_${{inputs.depotdownloader-version}}
       uses: DuckSoft/extract-7z-action@v1.0
