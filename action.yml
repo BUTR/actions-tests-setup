@@ -89,8 +89,10 @@ runs:
         NUGET_AUTH_TOKEN: ${{inputs.github-token}}
 
     - uses: actions/download-artifact@v4
+      id: download_depotdownloader
       with:
-        name: DepotDownloader-framework
+        name: DepotDownloader-windows-x64
+        path: depotdownloader
         repository: SteamRE/DepotDownloader
         run-id: 10971966425
         
@@ -102,11 +104,11 @@ runs:
     #    tag: DepotDownloader_${{inputs.depotdownloader-version}}
     #    fileName: DepotDownloader-windows-x64.zip
 
-    - name: Extract DepotDownloader_${{inputs.depotdownloader-version}}
-      uses: DuckSoft/extract-7z-action@v1.0
-      with:
-        pathSource: ${{fromJson(steps.download_depotdownloader.outputs.downloaded_files)[0]}}
-        pathTarget: depotdownloader
+    #- name: Extract DepotDownloader_${{inputs.depotdownloader-version}}
+    #  uses: DuckSoft/extract-7z-action@v1.0
+    #  with:
+    #    pathSource: ${{fromJson(steps.download_depotdownloader.outputs.downloaded_files)[0]}}
+    #    pathTarget: depotdownloader
         
     - name: Download Game Binaries (Stable)
       run: >-
