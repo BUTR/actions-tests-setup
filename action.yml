@@ -37,7 +37,7 @@ inputs:
     
   depotdownloader-version:
     description: ''
-    default: '2.7.1'
+    default: '3.0.0'
   opencover-version:
     description: ''
     default: '4.7.922'
@@ -88,28 +88,19 @@ runs:
       env:
         NUGET_AUTH_TOKEN: ${{inputs.github-token}}
 
-    - uses: actions/download-artifact@v4
+    - name: Download DepotDownloader_${{inputs.depotdownloader-version}}
       id: download_depotdownloader
+      uses: robinraju/release-downloader@v1
       with:
-        name: DepotDownloader-windows-x64
-        path: depotdownloader
         repository: SteamRE/DepotDownloader
-        run-id: 10971966425
-        github-token: ${{ github.token }}
-        
-    #- name: Download DepotDownloader_${{inputs.depotdownloader-version}}
-    #  id: download_depotdownloader
-    #  uses: robinraju/release-downloader@v1
-    #  with:
-    #    repository: SteamRE/DepotDownloader
-    #    tag: DepotDownloader_${{inputs.depotdownloader-version}}
-    #    fileName: DepotDownloader-windows-x64.zip
+        tag: DepotDownloader_${{inputs.depotdownloader-version}}
+        fileName: DepotDownloader-windows-x64.zip
 
-    #- name: Extract DepotDownloader_${{inputs.depotdownloader-version}}
-    #  uses: DuckSoft/extract-7z-action@v1.0
-    #  with:
-    #    pathSource: ${{fromJson(steps.download_depotdownloader.outputs.downloaded_files)[0]}}
-    #    pathTarget: depotdownloader
+    - name: Extract DepotDownloader_${{inputs.depotdownloader-version}}
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: ${{fromJson(steps.download_depotdownloader.outputs.downloaded_files)[0]}}
+        pathTarget: depotdownloader
         
     - name: Download Game Binaries (Stable)
       run: >-
