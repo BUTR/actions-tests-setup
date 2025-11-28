@@ -37,7 +37,7 @@ inputs:
     
   depotdownloader-version:
     description: ''
-    default: '3.1.0'
+    default: '3.4.0'
   opencover-version:
     description: ''
     default: '4.7.922'
